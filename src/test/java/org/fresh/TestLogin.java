@@ -5,11 +5,11 @@ import org.testng.annotations.Test;
 
 public class TestLogin extends BaseTest {
 
-    @Test
-    public void test() {
+    @Test(dataProvider="loginData")
+    public void test(String username, String password) {
 
-        driver.findElement(AppiumBy.accessibilityId("test-Username")).sendKeys("");
-        driver.findElement(AppiumBy.accessibilityId("test-Password")).sendKeys("");
+        driver.findElement(AppiumBy.accessibilityId("test-Username")).sendKeys(username);
+        driver.findElement(AppiumBy.accessibilityId("test-Password")).sendKeys(password);
         driver.findElement(AppiumBy.accessibilityId("test-LOGIN")).click();
 
 

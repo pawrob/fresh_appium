@@ -5,10 +5,15 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.fresh.utilities.PropertiesLoader;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 
 import java.io.File;
+import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -47,5 +52,20 @@ public class BaseTest {
         if (service != null && service.isRunning()) {
             service.stop();
         }
+    }
+
+    @DataProvider(name = "loginData")
+    public Object[][] getDataFromJson() throws Exception {
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser
+                .parse(new FileReader(System.getProperty("user.dir") + "//src//test//java//testData//loginData.json"));
+
+        Object[][] data = new Object[jsonArray.size()][2];
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject user = (JSONObject) jsonArray.get(i);
+            data[i][0] = user.get("username");
+            data[i][1] = user.get("password");
+        }
+        return data;
     }
 }
