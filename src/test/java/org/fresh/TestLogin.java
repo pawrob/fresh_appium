@@ -8,10 +8,9 @@ public class TestLogin extends BaseTest {
     @Test
     public void test() {
 
-        driver.findElement(AppiumBy.accessibilityId("test-Username")).sendKeys("standard_user");
-        driver.findElement(AppiumBy.accessibilityId("test-Password")).sendKeys("secret_sauce");
+        driver.findElement(AppiumBy.accessibilityId("test-Username")).sendKeys("");
+        driver.findElement(AppiumBy.accessibilityId("test-Password")).sendKeys("");
         driver.findElement(AppiumBy.accessibilityId("test-LOGIN")).click();
-
 
 
     }
