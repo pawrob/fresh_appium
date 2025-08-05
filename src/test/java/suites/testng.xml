@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Tests">
+    <listeners>
+        <listener class-name="org.fresh.utilities.TestListener"/>
+    </listeners>
+    <test name="All">
+        <groups>
+            <run>
+                <include name="android" />
+            </run>
+        </groups>
+        <packages>
+            <package name="org.fresh"/>
+        </packages>
+    </test>
+</suite>

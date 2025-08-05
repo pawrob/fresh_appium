@@ -13,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,19 +21,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
+@Listeners(org.fresh.utilities.TestListener.class)
 public class BaseTest {
 
     public AndroidDriver driver;
     public AppiumDriverLocalService service;
     public int ServerTimeout = 60;
-    public String platformName = new PropertiesLoader().getPlatform();
-    public String deviceName = new PropertiesLoader().getDeviceName();
+    final PropertiesLoader propertiesLoader = new PropertiesLoader();
+    public String platformName = propertiesLoader.getPlatform();
+    public String deviceName = propertiesLoader.getDeviceName();
 
     private static final Logger log = LogManager.getLogger(Logger.class.getName());
 
     @BeforeClass
     public void ConfigureAppium() throws MalformedURLException {
-        final PropertiesLoader propertiesLoader = new PropertiesLoader();
         service = new AppiumServiceBuilder()
                 .withAppiumJS(new File("//opt//homebrew//lib//node_modules//appium"))
                 .withIPAddress(propertiesLoader.getHost()).usingPort(propertiesLoader.getPort()).build();

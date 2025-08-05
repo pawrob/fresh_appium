@@ -5,8 +5,8 @@ import org.testng.annotations.Test;
 
 public class TestLogin extends BaseTest {
 
-    @Test(dataProvider="loginData")
-    public void test(String username, String password) {
+    @Test(groups = {"android"}, dataProvider="loginData")
+    public void testUserCanLogInToApp(String username, String password) {
 
         driver.findElement(AppiumBy.accessibilityId("test-Username")).sendKeys(username);
         driver.findElement(AppiumBy.accessibilityId("test-Password")).sendKeys(password);
