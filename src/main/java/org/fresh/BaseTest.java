@@ -4,6 +4,8 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.fresh.utilities.PropertiesLoader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,6 +25,10 @@ public class BaseTest {
     public AndroidDriver driver;
     public AppiumDriverLocalService service;
     public int ServerTimeout = 60;
+    public String platformName = new PropertiesLoader().getPlatform();
+    public String deviceName = new PropertiesLoader().getDeviceName();
+
+    private static final Logger log = LogManager.getLogger(Logger.class.getName());
 
     @BeforeClass
     public void ConfigureAppium() throws MalformedURLException {
@@ -30,10 +36,14 @@ public class BaseTest {
         service = new AppiumServiceBuilder()
                 .withAppiumJS(new File("//opt//homebrew//lib//node_modules//appium"))
                 .withIPAddress(propertiesLoader.getHost()).usingPort(propertiesLoader.getPort()).build();
+        service.clearOutPutStreams();
         service.start();
+
+        log.info(String.format("Starting test for platform: %s", platformName));
+        log.info(String.format("Running on device: %s", deviceName));
         UiAutomator2Options options = new UiAutomator2Options();
-        options.setDeviceName(propertiesLoader.getDeviceName());
-        options.setPlatformName(propertiesLoader.getPlatform());
+        options.setDeviceName(deviceName);
+        options.setPlatformName(platformName);
         options.setPlatformVersion(propertiesLoader.getPlatformVersion());
         options.setAutomationName(propertiesLoader.getAndroidAutomationName());
         options.setUiautomator2ServerLaunchTimeout(Duration.ofSeconds(ServerTimeout));
