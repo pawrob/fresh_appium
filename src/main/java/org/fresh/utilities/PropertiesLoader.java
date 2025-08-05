@@ -1,5 +1,8 @@
 package org.fresh.utilities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -7,6 +10,8 @@ import java.util.Properties;
 public class PropertiesLoader {
     private Properties properties;
     private final String propertiesPath;
+
+    private static final Logger log = LogManager.getLogger(Logger.class.getName());
 
     public PropertiesLoader() {
 
@@ -18,8 +23,10 @@ public class PropertiesLoader {
         properties = new Properties();
         try {
             properties.load(Files.newInputStream(Paths.get(propertiesPath)));
+            log.info("Loaded properties from '{}' file.", propertiesPath);
+
         } catch (Exception e) {
-            System.out.printf("Failed to load '%s' file.%n", propertiesPath);
+            log.warn("Failed to load '{}' file.", propertiesPath, e);
         }
     }
 
