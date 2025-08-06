@@ -13,7 +13,7 @@ public class TestLogin extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.typeUsername(username);
         loginPage.typePassword(password);
-        ShopPage shopPage = loginPage.clickSignInWithEmailButton();
+        ShopPage shopPage = loginPage.clickLoginButton();
         Assert.assertEquals(shopPage.getShopProductsHeaderText(), "PRODUCTS");
 
     }

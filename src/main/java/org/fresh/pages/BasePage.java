@@ -28,7 +28,7 @@ public class BasePage {
     }
 
 
-    public void clickWithFluentWait(WebElement element) {
+    public void waitForElementAndClick(WebElement element) {
 
         wait.until(driver -> {
             if (element.isDisplayed() && element.isEnabled()) {
@@ -39,7 +39,7 @@ public class BasePage {
         });
     }
 
-    public void sendKeysWithFluentWait(WebElement element, String text) {
+    public void waitForElementAndInputText(WebElement element, String text) {
         wait.until(driver -> {
             if (element.isDisplayed() && element.isEnabled()) {
                 element.clear();
@@ -50,7 +50,7 @@ public class BasePage {
         });
     }
 
-    public String getTextWithFluentWait(WebElement element) {
+    public String waitForElementAndGetText(WebElement element) {
 
         return wait.until(driver -> {
             if (element.isDisplayed() && element.isEnabled()) {

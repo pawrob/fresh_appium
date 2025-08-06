@@ -16,6 +16,6 @@ public class ShopPage extends BasePage {
     }
 
     public String getShopProductsHeaderText() {
-        return getTextWithFluentWait(shopProductsHeader);
+        return waitForElementAndGetText(shopProductsHeader);
     }
 }

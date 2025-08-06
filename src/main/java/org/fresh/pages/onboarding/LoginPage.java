@@ -21,16 +21,16 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public ShopPage clickSignInWithEmailButton() {
-        clickWithFluentWait(loginButton);
+    public ShopPage clickLoginButton() {
+        waitForElementAndClick(loginButton);
         return new ShopPage(driver);
     }
 
     public void typeUsername(String username) {
-        sendKeysWithFluentWait(usernameInputField, username);
+        waitForElementAndInputText(usernameInputField, username);
     }
 
     public void typePassword(String password) {
-        sendKeysWithFluentWait(passwordInputField, password);
+        waitForElementAndInputText(passwordInputField, password);
     }
 }
