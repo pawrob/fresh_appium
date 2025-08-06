@@ -1,8 +1,9 @@
-package org.fresh.pages.shop;
+package org.fresh.pages.shop.checkout;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.fresh.pages.BasePage;
+import org.fresh.pages.shop.ShopPage;
 import org.openqa.selenium.WebElement;
 
 public class CompletedCheckoutPage extends BasePage {

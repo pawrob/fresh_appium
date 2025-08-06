@@ -1,11 +1,11 @@
-package org.fresh.pages.shop;
+package org.fresh.pages.shop.checkout;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.fresh.pages.BasePage;
 import org.openqa.selenium.WebElement;
 
-public class CheckoutPage extends BasePage {
+public class CheckoutInformationPage extends BasePage {
 
     @AndroidFindBy(accessibility = "test-First Name")
     private WebElement firstNameInputField;
@@ -25,7 +25,7 @@ public class CheckoutPage extends BasePage {
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']//android.widget.TextView[1]")
     private WebElement checkoutValidationErrorMessage;
 
-    public CheckoutPage(AppiumDriver driver) {
+    public CheckoutInformationPage(AppiumDriver driver) {
         super(driver);
     }
 
@@ -47,14 +47,15 @@ public class CheckoutPage extends BasePage {
         typeZipCode(zipCode);
     }
 
-    public PaymentPage clickContinueButtonAndOpenPaymentPage() {
+    public CheckoutPaymentPage clickContinueButtonAndOpenPaymentPage() {
         waitForElementAndClick(continueButton);
-        PaymentPage paymentPage = new PaymentPage(driver);
-        paymentPage.waitForPaymentPageToOpen();
+        CheckoutPaymentPage checkoutPaymentPage = new CheckoutPaymentPage(driver);
+        checkoutPaymentPage.waitForPaymentPageToOpen();
 
-        return paymentPage;
+        return checkoutPaymentPage;
     }
-    public void  clickContinueButton() {
+
+    public void clickContinueButton() {
         waitForElementAndClick(continueButton);
     }
 

@@ -3,6 +3,7 @@ package org.fresh.pages.shop;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.fresh.pages.BasePage;
+import org.fresh.pages.shop.checkout.CheckoutInformationPage;
 import org.openqa.selenium.WebElement;
 
 public class CartPage extends BasePage {
@@ -31,11 +32,11 @@ public class CartPage extends BasePage {
         return waitForElementAndGetText(firstProductLabel);
     }
 
-    public CheckoutPage clickCheckoutButtonAndOpenCheckoutPage() {
+    public CheckoutInformationPage clickCheckoutButtonAndOpenCheckoutPage() {
         waitForElementAndClick(checkoutButton);
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.waitForCheckoutPageToOpen();
-        return checkoutPage;
+        CheckoutInformationPage checkoutInformationPage = new CheckoutInformationPage(driver);
+        checkoutInformationPage.waitForCheckoutPageToOpen();
+        return checkoutInformationPage;
     }
 
     public void waitForCartPageToOpen() {
