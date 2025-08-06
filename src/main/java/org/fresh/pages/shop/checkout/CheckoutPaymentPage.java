@@ -1,11 +1,11 @@
-package org.fresh.pages.shop;
+package org.fresh.pages.shop.checkout;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.fresh.pages.BasePage;
 import org.openqa.selenium.WebElement;
 
-public class PaymentPage extends BasePage {
+public class CheckoutPaymentPage extends BasePage {
 
     @AndroidFindBy(accessibility = "test-FINISH")
     private WebElement finishButton;
@@ -28,7 +28,7 @@ public class PaymentPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Shipping Information:']/following-sibling::android.widget.TextView[2]")
     private WebElement itemTotalText;
 
-    public PaymentPage(AppiumDriver driver) {
+    public CheckoutPaymentPage(AppiumDriver driver) {
         super(driver);
     }
 

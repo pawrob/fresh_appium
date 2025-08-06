@@ -3,7 +3,7 @@ package org.fresh.helpers;
 import io.appium.java_client.AppiumDriver;
 import org.fresh.pages.BasePage;
 import org.fresh.pages.shop.CartPage;
-import org.fresh.pages.shop.CheckoutPage;
+import org.fresh.pages.shop.checkout.CheckoutInformationPage;
 import org.fresh.pages.shop.ShopPage;
 
 public class OrderDetailsHelper extends BasePage {
@@ -12,7 +12,7 @@ public class OrderDetailsHelper extends BasePage {
     }
 
 
-    public CheckoutPage goToCheckoutPage(String username,String password) {
+    public CheckoutInformationPage goToCheckoutPage(String username, String password) {
         LoginHelper loginHelper = new LoginHelper(driver);
         ShopPage shopPage = loginHelper.loginToShop(username, password);
         CartPage cartPage = shopPage.openCart();

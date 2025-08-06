@@ -6,7 +6,7 @@
     <test name="MyTests">
         <classes>
             <class name="org.fresh.TestLogin"/>
-            <class name="org.fresh.TestShop"/>
+            <class name="org.fresh.TestShopCheckout"/>
         </classes>
     </test>
 </suite>
