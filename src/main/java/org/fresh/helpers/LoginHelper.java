@@ -15,6 +15,6 @@ public class LoginHelper extends BasePage {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.typeUsername(username);
         loginPage.typePassword(password);
-        return loginPage.clickLoginButton();
+        return loginPage.clickLoginButtonAndOpenShopPage();
     }
 }

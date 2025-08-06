@@ -40,7 +40,7 @@ public class PaymentPage extends BasePage {
         waitForElementToBeVisible(paymentPageHeader);
     }
 
-    public CompletedCheckoutPage clickFinishButton() {
+    public CompletedCheckoutPage clickFinishButtonAndOpenCompletedCheckoutPage() {
         scrollToFinishButton();
         waitForElementAndClick(finishButton);
         CompletedCheckoutPage completedCheckoutPage = new CompletedCheckoutPage(driver);

@@ -31,7 +31,7 @@ public class CartPage extends BasePage {
         return waitForElementAndGetText(firstProductLabel);
     }
 
-    public CheckoutPage clickCheckoutButton() {
+    public CheckoutPage clickCheckoutButtonAndOpenCheckoutPage() {
         waitForElementAndClick(checkoutButton);
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.waitForCheckoutPageToOpen();
@@ -46,7 +46,7 @@ public class CartPage extends BasePage {
         waitForElementAndClick(removeFirstProductButton);
     }
 
-    public ShopPage clickContinueShoppingButton() {
+    public ShopPage clickContinueShoppingButtonAndOpenShopPage() {
         waitForElementAndClick(continueShoppingButton);
         ShopPage shopPage = new ShopPage(driver);
         shopPage.waitForShopPageToOpen();

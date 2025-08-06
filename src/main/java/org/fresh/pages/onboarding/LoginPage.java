@@ -21,7 +21,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public ShopPage clickLoginButton() {
+    public ShopPage clickLoginButtonAndOpenShopPage() {
         waitForElementAndClick(loginButton);
         ShopPage shopPage = new ShopPage(driver);
         shopPage.waitForShopPageToOpen();
