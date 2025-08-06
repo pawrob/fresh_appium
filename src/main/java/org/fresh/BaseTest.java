@@ -79,18 +79,24 @@ public class BaseTest {
         }
     }
 
-    @DataProvider(name = "loginData")
-    public Object[][] getDataFromJson() throws Exception {
+
+    public Object[][] getCredentialsFromFile(String filename) throws Exception {
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = (JSONArray) parser
-                .parse(new FileReader(System.getProperty("user.dir") + "//src//test//java//testData//loginData.json"));
+                .parse(new FileReader(System.getProperty("user.dir") + "//src//test//java//testData//" + filename + ".json"));
+        JSONObject user = (JSONObject) jsonArray.get(0);
+        return new Object[][]{
+                {user.get("username"), user.get("password")}
+        };
+    }
 
-        Object[][] data = new Object[jsonArray.size()][2];
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject user = (JSONObject) jsonArray.get(i);
-            data[i][0] = user.get("username");
-            data[i][1] = user.get("password");
-        }
-        return data;
+    @DataProvider(name = "loginData")
+    public Object[][] getValidUserCredentials() throws Exception {
+        return getCredentialsFromFile("loginData");
+    }
+
+    @DataProvider(name = "blockedUserData")
+    public Object[][] getBlockedUserCredentials() throws Exception {
+        return getCredentialsFromFile("blockedUserData");
     }
 }
