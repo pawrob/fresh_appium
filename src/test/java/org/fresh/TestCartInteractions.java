@@ -13,7 +13,7 @@ public class TestCartInteractions extends BaseTest {
         LoginHelper loginHelper = new LoginHelper(driver);
         ShopPage shopPage = loginHelper.loginToShop(username, password);
 
-        shopPage.addBackpackToCart();
+        shopPage.addFirstItemToCart();
 
         int itemsInCartAfterAddition = shopPage.getNumberOfProductsInCart();
         Assert.assertEquals(itemsInCartAfterAddition, 1, "Number of products in cart is not updated to 1 after adding a product");
@@ -30,14 +30,14 @@ public class TestCartInteractions extends BaseTest {
         LoginHelper loginHelper = new LoginHelper(driver);
         ShopPage shopPage = loginHelper.loginToShop(username, password);
 
-        shopPage.addBackpackToCart();
+        shopPage.addFirstItemToCart();
 
-
+        String firstProductName = shopPage.getNamesOfVisibleItems().get(0);
         int itemsInCartAfterAddition = shopPage.getNumberOfProductsInCart();
         Assert.assertEquals(itemsInCartAfterAddition, 1, "Number of products in cart is not updated to 1 after adding a product");
         CartPage cartPage = shopPage.openCart();
 
-        Assert.assertEquals(cartPage.getFirstProductLabelText(), "Sauce Labs Backpack",
+        Assert.assertEquals(cartPage.getFirstProductLabelText(), firstProductName,
                 "First product in cart is not 'Sauce Labs Backpack'");
         cartPage.removeFirstProductFromCart();
         cartPage.clickContinueShoppingButtonAndOpenShopPage();

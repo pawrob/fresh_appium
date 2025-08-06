@@ -9,5 +9,6 @@ public enum EnvironmentVariables {
     HOST,
     PORT,
     ANDROID_APP_PACKAGE,
-    ANDROID_APP_ACTIVITY
+    ANDROID_APP_ACTIVITY,
+    APPIUM_LOCAL_PATH
 }

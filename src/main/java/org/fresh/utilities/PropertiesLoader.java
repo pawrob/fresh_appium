@@ -65,4 +65,7 @@ public class PropertiesLoader {
     public String getAndroidAppActivity() {
         return properties.getProperty(EnvironmentVariables.ANDROID_APP_ACTIVITY.name());
     }
+    public String getAppiumLocalPath() {
+        return properties.getProperty(EnvironmentVariables.APPIUM_LOCAL_PATH.name());
+    }
 }

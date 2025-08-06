@@ -21,32 +21,34 @@ public class TestShopCheckout extends BaseTest {
         int itemsInCartAfterLogin = shopPage.getNumberOfProductsInCart();
         Assert.assertEquals(itemsInCartAfterLogin, 0, "Number of products in cart is not zero after login");
 
-        shopPage.addBackpackToCart();
-        Assert.assertTrue(shopPage.isBackpackProductDisplayed(), "Backpack product is not displayed after adding to cart");
+        String firstProductName = shopPage.getNamesOfVisibleItems().get(0);
+        Double firstProductPrice = shopPage.getPricesOfVisibleItems().get(0);
+        shopPage.addFirstItemToCart();
+        Assert.assertEquals(shopPage.getFirstProductName(), firstProductName, "First product name is not correct");
 
         int itemsInCartAfterAddition = shopPage.getNumberOfProductsInCart();
         Assert.assertEquals(itemsInCartAfterAddition, 1, "Number of products in cart is not updated to 1 after adding a product");
 
         CartPage cartPage = shopPage.openCart();
 
-        Assert.assertEquals(cartPage.getFirstProductLabelText(), "Sauce Labs Backpack",
+        Assert.assertEquals(cartPage.getFirstProductLabelText(), firstProductName,
                 "First product in cart is not 'Sauce Labs Backpack'");
 
         CheckoutInformationPage checkoutInformationPage = cartPage.clickCheckoutButtonAndOpenCheckoutPage();
 
         checkoutInformationPage.fillCheckoutForm("Paweł", "Bucki", "12345");
         CheckoutPaymentPage checkoutPaymentPage = checkoutInformationPage.clickContinueButtonAndOpenPaymentPage();
-        Assert.assertEquals(checkoutPaymentPage.getFirstProductLabelText(), "Sauce Labs Backpack",
-                "First product in payment page is not 'Sauce Labs Backpack'");
-        Assert.assertEquals(checkoutPaymentPage.getFirstProductPriceText(), "$29.99",
-                "First product price in payment page is not '$29.99'");
+        Assert.assertEquals(checkoutPaymentPage.getFirstProductLabelText(), firstProductName,
+                "First product in payment page is not" + firstProductName);
+        Assert.assertEquals(checkoutPaymentPage.getFirstProductPriceText(), "$" + firstProductPrice.toString(),
+                "First product price in payment page is not $" + firstProductPrice);
         Assert.assertEquals(checkoutPaymentPage.getPaymentInformationText(), "SauceCard #31337",
                 "Payment information in payment page is not 'SauceCard #31337'");
         Assert.assertEquals(checkoutPaymentPage.getShippingInformationText(), "FREE PONY EXPRESS DELIVERY!",
                 "Shipping information in payment page is not 'FREE PONY EXPRESS DELIVERY!'");
 
-        Assert.assertEquals(checkoutPaymentPage.getItemTotalText(), "Item total: $29.99",
-                "Item total in payment page is not 'Item total: $29.99'");
+        Assert.assertEquals(checkoutPaymentPage.getItemTotalText(), "Item total: $" + firstProductPrice,
+                "Item total in payment page is not 'Item total: $" + firstProductPrice + "'");
 
 
         CompletedCheckoutPage completedCheckoutPage = checkoutPaymentPage.clickFinishButtonAndOpenCompletedCheckoutPage();
@@ -55,7 +57,6 @@ public class TestShopCheckout extends BaseTest {
         completedCheckoutPage.clickBackHomeButtonAndOpenShopPage();
 
     }
-
 
 
     @Test(groups = {"android"}, dataProvider = "loginData")

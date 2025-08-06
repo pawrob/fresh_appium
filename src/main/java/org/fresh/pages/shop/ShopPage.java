@@ -14,10 +14,8 @@ public class ShopPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private WebElement shopProductsHeader;
 
-    // @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc='test-ADD TO CART'])[1]")
-    // it can be used if the product name is dynamic
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Sauce Labs Backpack']//parent::*/android.view.ViewGroup[last()]")
-    private WebElement addBackpackToCartButton;
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc='test-ADD TO CART'])[1]")
+    private WebElement addFirstProductToCartButton;
 
     @AndroidFindBy(accessibility = "test-Modal Selector Button")
     private WebElement sortingButton;
@@ -34,16 +32,15 @@ public class ShopPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Name (Z to A)']")
     private WebElement sortByNameZToAButton;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='test-Price' ]")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='test-Price']")
     private List<WebElement> productPrices;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='test-Item title']")
     private List<WebElement> productNames;
 
-    private WebElement removeBackpackFromCartButton = addBackpackToCartButton; // Assuming the remove button is the same element
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc='test-REMOVE'])[1]")
+    private WebElement removeFirstItemFromCart;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Sauce Labs Backpack']")
-    private WebElement backpackProductLabel;
 
     @AndroidFindBy(accessibility = "test-Cart")
     private WebElement cartButton;
@@ -56,16 +53,16 @@ public class ShopPage extends BasePage {
     }
 
 
-    public void addBackpackToCart() {
-        waitForElementAndClick(addBackpackToCartButton);
+    public void addFirstItemToCart() {
+        waitForElementAndClick(addFirstProductToCartButton);
     }
 
     public void removeBackpackFromCart() {
-        waitForElementAndClick(removeBackpackFromCartButton);
+        waitForElementAndClick(removeFirstItemFromCart);
     }
 
-    public boolean isBackpackProductDisplayed() {
-        return waitForElementToBeVisible(backpackProductLabel);
+    public String getFirstProductName() {
+        return waitForElementAndGetText(productNames.get(0));
     }
 
     public int getNumberOfProductsInCart() {
