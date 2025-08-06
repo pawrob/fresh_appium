@@ -16,6 +16,8 @@ public class ShopPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Sauce Labs Backpack']//parent::*/android.view.ViewGroup[last()]")
     private WebElement addBackpackToCartButton;
 
+    private WebElement removeBackpackFromCartButton = addBackpackToCartButton; // Assuming the remove button is the same element
+
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Sauce Labs Backpack']")
     private WebElement backpackProductLabel;
 
@@ -29,12 +31,13 @@ public class ShopPage extends BasePage {
         super(driver);
     }
 
-    public String getShopProductsHeaderText() {
-        return waitForElementAndGetText(shopProductsHeader);
-    }
 
     public void addBackpackToCart() {
         waitForElementAndClick(addBackpackToCartButton);
+    }
+
+    public void removeBackpackFromCart() {
+        waitForElementAndClick(removeBackpackFromCartButton);
     }
 
     public boolean isBackpackProductDisplayed() {
@@ -43,13 +46,13 @@ public class ShopPage extends BasePage {
 
     public int getNumberOfProductsInCart() {
         if (checkIfElementIsNotVisible(numberOfProductsInCart)) {
-            return 0; // Return 0 if the cart icon is not visible
+            return 0;
         }
         String text = waitForElementAndGetText(numberOfProductsInCart);
         if (text != null && !text.isEmpty()) {
             return Integer.parseInt(text);
         }
-        return 0; // Return 0 if the text is null or empty
+        return 0;
     }
 
     public CartPage openCart() {

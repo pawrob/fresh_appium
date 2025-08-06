@@ -29,7 +29,7 @@ public class CompletedCheckoutPage extends BasePage {
         return waitForElementToBeVisible(thankYouMessage);
     }
 
-    public ShopPage clickBackHomeButton() {
+    public ShopPage clickBackHomeButtonAndOpenShopPage() {
         waitForElementAndClick(backHomeButton);
         ShopPage shopPage = new ShopPage(driver);
         shopPage.waitForShopPageToOpen();

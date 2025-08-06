@@ -17,15 +17,23 @@ public class LoginPage extends BasePage {
     @AndroidFindBy(accessibility = "test-LOGIN")
     private WebElement loginButton;
 
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']//android.widget.TextView[1]")
+    private WebElement loginValidationErrorMessage;
+
     public LoginPage(AppiumDriver driver) {
         super(driver);
     }
 
-    public ShopPage clickLoginButton() {
+    public ShopPage clickLoginButtonAndOpenShopPage() {
         waitForElementAndClick(loginButton);
         ShopPage shopPage = new ShopPage(driver);
         shopPage.waitForShopPageToOpen();
         return shopPage;
+    }
+
+
+    public void clickLoginButton() {
+        waitForElementAndClick(loginButton);
     }
 
     public void typeUsername(String username) {
@@ -34,5 +42,9 @@ public class LoginPage extends BasePage {
 
     public void typePassword(String password) {
         waitForElementAndInputText(passwordInputField, password);
+    }
+
+    public String getLoginValidationErrorMessage() {
+        return waitForElementAndGetText(loginValidationErrorMessage);
     }
 }

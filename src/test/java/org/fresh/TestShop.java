@@ -1,6 +1,7 @@
 package org.fresh;
 
 import org.fresh.helpers.LoginHelper;
+import org.fresh.helpers.OrderDetailsHelper;
 import org.fresh.pages.shop.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -28,10 +29,10 @@ public class TestShop extends BaseTest {
         Assert.assertEquals(cartPage.getFirstProductLabelText(), "Sauce Labs Backpack",
                 "First product in cart is not 'Sauce Labs Backpack'");
 
-        CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
+        CheckoutPage checkoutPage = cartPage.clickCheckoutButtonAndOpenCheckoutPage();
 
         checkoutPage.fillCheckoutForm("Paweł", "Bucki", "12345");
-        PaymentPage paymentPage = checkoutPage.clickContinueButton();
+        PaymentPage paymentPage = checkoutPage.clickContinueButtonAndOpenPaymentPage();
         Assert.assertEquals(paymentPage.getFirstProductLabelText(), "Sauce Labs Backpack",
                 "First product in payment page is not 'Sauce Labs Backpack'");
         Assert.assertEquals(paymentPage.getFirstProductPriceText(), "$29.99",
@@ -45,11 +46,66 @@ public class TestShop extends BaseTest {
                 "Item total in payment page is not 'Item total: $29.99'");
 
 
-        CompletedCheckoutPage completedCheckoutPage = paymentPage.clickFinishButton();
+        CompletedCheckoutPage completedCheckoutPage = paymentPage.clickFinishButtonAndOpenCompletedCheckoutPage();
         Assert.assertTrue(completedCheckoutPage.checkIfThankYouMessageIsPresent(),
                 "Thank you message is not present after completing checkout");
-        completedCheckoutPage.clickBackHomeButton();
+        completedCheckoutPage.clickBackHomeButtonAndOpenShopPage();
 
+    }
+
+    @Test(groups = {"android"}, dataProvider = "loginData")
+    public void testUserCanRemoveProductFromCartFromShopPage(String username, String password) {
+
+        LoginHelper loginHelper = new LoginHelper(driver);
+        ShopPage shopPage = loginHelper.loginToShop(username, password);
+
+        shopPage.addBackpackToCart();
+
+        int itemsInCartAfterAddition = shopPage.getNumberOfProductsInCart();
+        Assert.assertEquals(itemsInCartAfterAddition, 1, "Number of products in cart is not updated to 1 after adding a product");
+
+        shopPage.removeBackpackFromCart();
+
+        int itemsInCartAfterRemoval = shopPage.getNumberOfProductsInCart();
+        Assert.assertEquals(itemsInCartAfterRemoval, 0, "Number of products in cart is not updated to 0 after removing a product");
+    }
+
+    @Test(groups = {"android"}, dataProvider = "loginData")
+    public void testUserCanRemoveProductFromCartFromCartPage(String username, String password) {
+
+        LoginHelper loginHelper = new LoginHelper(driver);
+        ShopPage shopPage = loginHelper.loginToShop(username, password);
+
+        shopPage.addBackpackToCart();
+
+
+        int itemsInCartAfterAddition = shopPage.getNumberOfProductsInCart();
+        Assert.assertEquals(itemsInCartAfterAddition, 1, "Number of products in cart is not updated to 1 after adding a product");
+        CartPage cartPage = shopPage.openCart();
+
+        Assert.assertEquals(cartPage.getFirstProductLabelText(), "Sauce Labs Backpack",
+                "First product in cart is not 'Sauce Labs Backpack'");
+        cartPage.removeFirstProductFromCart();
+        cartPage.clickContinueShoppingButtonAndOpenShopPage();
+
+        int itemsInCartAfterRemoval = shopPage.getNumberOfProductsInCart();
+        Assert.assertEquals(itemsInCartAfterRemoval, 0, "Number of products in cart is not updated to 0 after removing a product");
+    }
+
+    @Test(groups = {"android"}, dataProvider = "loginData")
+    public void testValidationMessagesOnCheckoutPage(String username, String password) {
+
+        OrderDetailsHelper orderDetailsHelper = new OrderDetailsHelper(driver);
+        CheckoutPage checkoutPage = orderDetailsHelper.goToCheckoutPage(username, password);
+
+        checkoutPage.clickContinueButton();
+        Assert.assertEquals(checkoutPage.getCheckoutValidationErrorMessage(), "First Name is required");
+        checkoutPage.typeFirstName("Paweł");
+        checkoutPage.clickContinueButton();
+        Assert.assertEquals(checkoutPage.getCheckoutValidationErrorMessage(), "Last Name is required");
+        checkoutPage.typeLastName("Bucki");
+        checkoutPage.clickContinueButton();
+        Assert.assertEquals(checkoutPage.getCheckoutValidationErrorMessage(), "Postal Code is required");
     }
 
 }

@@ -22,6 +22,9 @@ public class CheckoutPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='CHECKOUT: INFORMATION']")
     private WebElement checkoutPageHeader;
 
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']//android.widget.TextView[1]")
+    private WebElement checkoutValidationErrorMessage;
+
     public CheckoutPage(AppiumDriver driver) {
         super(driver);
     }
@@ -44,17 +47,22 @@ public class CheckoutPage extends BasePage {
         typeZipCode(zipCode);
     }
 
-    public PaymentPage clickContinueButton() {
+    public PaymentPage clickContinueButtonAndOpenPaymentPage() {
         waitForElementAndClick(continueButton);
         PaymentPage paymentPage = new PaymentPage(driver);
         paymentPage.waitForPaymentPageToOpen();
 
         return paymentPage;
     }
+    public void  clickContinueButton() {
+        waitForElementAndClick(continueButton);
+    }
 
     public void waitForCheckoutPageToOpen() {
         waitForElementToBeVisible(checkoutPageHeader);
     }
 
-
+    public String getCheckoutValidationErrorMessage() {
+        return checkoutValidationErrorMessage.getText();
+    }
 }
