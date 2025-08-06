@@ -1,5 +1,6 @@
 package org.fresh.pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.*;
@@ -78,4 +79,9 @@ public class BasePage {
             return true; // Element is not present, hence not visible
         }
     }
+
+    public void scrollUntilTextIsVisible( String text) {
+        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text( \"" +text+ "\"));"));
+    }
+
 }

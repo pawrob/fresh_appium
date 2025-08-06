@@ -19,6 +19,9 @@ public class CheckoutPage extends BasePage {
     @AndroidFindBy(accessibility = "test-CONTINUE")
     private WebElement continueButton;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='CHECKOUT: INFORMATION']")
+    private WebElement checkoutPageHeader;
+
     public CheckoutPage(AppiumDriver driver) {
         super(driver);
     }
@@ -41,8 +44,16 @@ public class CheckoutPage extends BasePage {
         typeZipCode(zipCode);
     }
 
-    public void clickContinueButton() {
+    public PaymentPage clickContinueButton() {
         waitForElementAndClick(continueButton);
+        PaymentPage paymentPage = new PaymentPage(driver);
+        paymentPage.waitForPaymentPageToOpen();
+
+        return paymentPage;
+    }
+
+    public void waitForCheckoutPageToOpen() {
+        waitForElementToBeVisible(checkoutPageHeader);
     }
 
 

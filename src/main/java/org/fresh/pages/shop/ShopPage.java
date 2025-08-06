@@ -54,7 +54,13 @@ public class ShopPage extends BasePage {
 
     public CartPage openCart() {
         waitForElementAndClick(cartButton);
-        return new CartPage(driver);
+        CartPage cartPage= new CartPage(driver);
+        cartPage.waitForCartPageToOpen();
+        return cartPage;
+    }
+
+    public void waitForShopPageToOpen() {
+        waitForElementToBeVisible(shopProductsHeader);
     }
 
 }

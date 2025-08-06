@@ -23,7 +23,9 @@ public class LoginPage extends BasePage {
 
     public ShopPage clickLoginButton() {
         waitForElementAndClick(loginButton);
-        return new ShopPage(driver);
+        ShopPage shopPage = new ShopPage(driver);
+        shopPage.waitForShopPageToOpen();
+        return shopPage;
     }
 
     public void typeUsername(String username) {

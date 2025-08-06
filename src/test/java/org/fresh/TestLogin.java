@@ -3,6 +3,7 @@ package org.fresh;
 import org.fresh.pages.onboarding.LoginPage;
 import org.fresh.pages.shop.CartPage;
 import org.fresh.pages.shop.CheckoutPage;
+import org.fresh.pages.shop.PaymentPage;
 import org.fresh.pages.shop.ShopPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,7 +17,6 @@ public class TestLogin extends BaseTest {
         loginPage.typeUsername(username);
         loginPage.typePassword(password);
         ShopPage shopPage = loginPage.clickLoginButton();
-        Assert.assertEquals(shopPage.getShopProductsHeaderText(), "PRODUCTS");
 
 
         int itemsInCartAfterLogin = shopPage.getNumberOfProductsInCart();
@@ -34,6 +34,21 @@ public class TestLogin extends BaseTest {
                 "First product in cart is not 'Sauce Labs Backpack'");
 
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
+
+        checkoutPage.fillCheckoutForm("Paweł", "Bucki", "12345");
+        PaymentPage paymentPage = checkoutPage.clickContinueButton();
+        Assert.assertEquals(paymentPage.getFirstProductLabelText(), "Sauce Labs Backpack",
+                "First product in payment page is not 'Sauce Labs Backpack'");
+        Assert.assertEquals(paymentPage.getFirstProductPriceText(), "$29.99",
+                "First product price in payment page is not '$29.99'");
+        Assert.assertEquals(paymentPage.getPaymentInformationText(), "SauceCard #31337",
+                "Payment information in payment page is not 'SauceCard #31337'");
+        Assert.assertEquals(paymentPage.getShippingInformationText(), "FREE PONY EXPRESS DELIVERY!",
+                "Shipping information in payment page is not 'FREE PONY EXPRESS DELIVERY!'");
+
+
+
+        paymentPage.clickFinishButton();
 
 
     }
