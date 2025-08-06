@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 public class LoginPage extends BasePage {
 
     @AndroidFindBy(accessibility = "test-Username")
-    private WebElement loginInputField;
+    private WebElement usernameInputField;
 
     @AndroidFindBy(accessibility = "test-Password")
     private WebElement passwordInputField;
@@ -22,15 +22,15 @@ public class LoginPage extends BasePage {
     }
 
     public ShopPage clickSignInWithEmailButton() {
-        longPress(loginButton);
+        clickWithFluentWait(loginButton);
         return new ShopPage(driver);
     }
 
     public void typeUsername(String username) {
-        loginInputField.sendKeys(username);
+        sendKeysWithFluentWait(usernameInputField, username);
     }
 
     public void typePassword(String password) {
-        passwordInputField.sendKeys(password);
+        sendKeysWithFluentWait(passwordInputField, password);
     }
 }
