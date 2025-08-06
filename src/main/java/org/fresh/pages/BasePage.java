@@ -61,5 +61,21 @@ public class BasePage {
         });
     }
 
+    public Boolean waitForElementToBeVisible(WebElement element) {
+        return wait.until(driver -> {
+            if (element.isDisplayed() && element.isEnabled()) {
+                return true;
+            }
+            return false;
+        });
+    }
 
+
+    public Boolean checkIfElementIsNotVisible(WebElement element) {
+        try {
+            return !element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return true; // Element is not present, hence not visible
+        }
+    }
 }
