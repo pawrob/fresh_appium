@@ -1,23 +1,18 @@
 package org.fresh;
 
-import org.fresh.pages.onboarding.LoginPage;
-import org.fresh.pages.shop.CartPage;
-import org.fresh.pages.shop.CheckoutPage;
-import org.fresh.pages.shop.PaymentPage;
-import org.fresh.pages.shop.ShopPage;
+import org.fresh.helpers.LoginHelper;
+import org.fresh.pages.shop.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TestLogin extends BaseTest {
+public class TestShop extends BaseTest {
+
 
     @Test(groups = {"android"}, dataProvider = "loginData")
-    public void testUserCanLogInToApp(String username, String password) {
+    public void testUserCanCompleteOrder(String username, String password) {
 
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.typeUsername(username);
-        loginPage.typePassword(password);
-        ShopPage shopPage = loginPage.clickLoginButton();
-
+        LoginHelper loginHelper = new LoginHelper(driver);
+        ShopPage shopPage = loginHelper.loginToShop(username, password);
 
         int itemsInCartAfterLogin = shopPage.getNumberOfProductsInCart();
         Assert.assertEquals(itemsInCartAfterLogin, 0, "Number of products in cart is not zero after login");
@@ -25,8 +20,8 @@ public class TestLogin extends BaseTest {
         shopPage.addBackpackToCart();
         Assert.assertTrue(shopPage.isBackpackProductDisplayed(), "Backpack product is not displayed after adding to cart");
 
-        int updatedNumber = shopPage.getNumberOfProductsInCart();
-        Assert.assertEquals(updatedNumber, 1, "Number of products in cart is not updated to 1 after adding a product");
+        int itemsInCartAfterAddition = shopPage.getNumberOfProductsInCart();
+        Assert.assertEquals(itemsInCartAfterAddition, 1, "Number of products in cart is not updated to 1 after adding a product");
 
         CartPage cartPage = shopPage.openCart();
 
@@ -46,10 +41,15 @@ public class TestLogin extends BaseTest {
         Assert.assertEquals(paymentPage.getShippingInformationText(), "FREE PONY EXPRESS DELIVERY!",
                 "Shipping information in payment page is not 'FREE PONY EXPRESS DELIVERY!'");
 
+        Assert.assertEquals(paymentPage.getItemTotalText(), "Item total: $29.99",
+                "Item total in payment page is not 'Item total: $29.99'");
 
 
-        paymentPage.clickFinishButton();
-
+        CompletedCheckoutPage completedCheckoutPage = paymentPage.clickFinishButton();
+        Assert.assertTrue(completedCheckoutPage.checkIfThankYouMessageIsPresent(),
+                "Thank you message is not present after completing checkout");
+        completedCheckoutPage.clickBackHomeButton();
 
     }
+
 }

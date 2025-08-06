@@ -16,14 +16,17 @@ public class PaymentPage extends BasePage {
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Description']//android.widget.TextView[1]")
     private WebElement firstItemName;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Payment Information:']/following-sibling::android.widget.TextView[1]")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Price']//android.widget.TextView[1]")
     private WebElement firstItemPrice;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Shipping Information:']/following-sibling::android.widget.TextView[1]" )
-    private WebElement paymentInformation;
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Payment Information:']/following-sibling::android.widget.TextView[1]")
+    private WebElement paymentInformationText;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Shipping Information:']/following-sibling::android.widget.TextView[1]")
+    private WebElement shippingInformationText;
 
-    private WebElement shippingInformation;
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Shipping Information:']/following-sibling::android.widget.TextView[2]")
+    private WebElement itemTotalText;
 
     public PaymentPage(AppiumDriver driver) {
         super(driver);
@@ -36,21 +39,32 @@ public class PaymentPage extends BasePage {
     public void waitForPaymentPageToOpen() {
         waitForElementToBeVisible(paymentPageHeader);
     }
-    public void clickFinishButton() {
+
+    public CompletedCheckoutPage clickFinishButton() {
         scrollToFinishButton();
         waitForElementAndClick(finishButton);
+        CompletedCheckoutPage completedCheckoutPage = new CompletedCheckoutPage(driver);
+        completedCheckoutPage.waitForCompletedCheckoutPageToOpen();
+        return completedCheckoutPage;
     }
+
     public String getFirstProductLabelText() {
         return waitForElementAndGetText(firstItemName);
     }
+
     public String getFirstProductPriceText() {
         return waitForElementAndGetText(firstItemPrice);
     }
 
     public String getPaymentInformationText() {
-        return waitForElementAndGetText(paymentInformation);
+        return waitForElementAndGetText(paymentInformationText);
     }
+
     public String getShippingInformationText() {
-        return waitForElementAndGetText(shippingInformation);
+        return waitForElementAndGetText(shippingInformationText);
+    }
+
+    public String getItemTotalText() {
+        return waitForElementAndGetText(itemTotalText);
     }
 }
