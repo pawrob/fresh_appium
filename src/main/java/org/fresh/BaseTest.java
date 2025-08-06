@@ -52,8 +52,14 @@ public class BaseTest {
         options.setUiautomator2ServerInstallTimeout(Duration.ofSeconds(ServerTimeout));
         options.setAppWaitActivity(propertiesLoader.getAndroidAppActivity());
         options.setApp(System.getProperty("user.dir") + propertiesLoader.getArtifactPath());
+        options.setFullReset(false);
+        options.setNoReset(false);
+        options.setNewCommandTimeout(Duration.ofSeconds(ServerTimeout));
+        options.setSkipUnlock(true);
 
         driver = new AndroidDriver(new URL("http://" + propertiesLoader.getHost() + ":" + propertiesLoader.getPort() + "/"), options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        log.info("Appium server started successfully");
     }
 
     @AfterClass
