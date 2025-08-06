@@ -34,7 +34,7 @@ public class BaseTest {
     @BeforeClass
     public void ConfigureAppium() throws MalformedURLException {
         service = new AppiumServiceBuilder()
-                .withAppiumJS(new File("//opt//homebrew//lib//node_modules//appium"))
+                .withAppiumJS(new File(propertiesLoader.getAppiumLocalPath()))
                 .withIPAddress(propertiesLoader.getHost()).usingPort(propertiesLoader.getPort()).build();
         service.clearOutPutStreams();
         service.start();
