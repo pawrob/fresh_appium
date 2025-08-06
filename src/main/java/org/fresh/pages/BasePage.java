@@ -1,5 +1,6 @@
 package org.fresh.pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.*;
@@ -28,7 +29,7 @@ public class BasePage {
     }
 
 
-    public void clickWithFluentWait(WebElement element) {
+    public void waitForElementAndClick(WebElement element) {
 
         wait.until(driver -> {
             if (element.isDisplayed() && element.isEnabled()) {
@@ -39,7 +40,7 @@ public class BasePage {
         });
     }
 
-    public void sendKeysWithFluentWait(WebElement element, String text) {
+    public void waitForElementAndInputText(WebElement element, String text) {
         wait.until(driver -> {
             if (element.isDisplayed() && element.isEnabled()) {
                 element.clear();
@@ -50,7 +51,7 @@ public class BasePage {
         });
     }
 
-    public String getTextWithFluentWait(WebElement element) {
+    public String waitForElementAndGetText(WebElement element) {
 
         return wait.until(driver -> {
             if (element.isDisplayed() && element.isEnabled()) {
@@ -61,5 +62,26 @@ public class BasePage {
         });
     }
 
+    public Boolean waitForElementToBeVisible(WebElement element) {
+        return wait.until(driver -> {
+            if (element.isDisplayed() && element.isEnabled()) {
+                return true;
+            }
+            return false;
+        });
+    }
+
+
+    public Boolean checkIfElementIsNotVisible(WebElement element) {
+        try {
+            return !element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return true; // Element is not present, hence not visible
+        }
+    }
+
+    public void scrollUntilTextIsVisible( String text) {
+        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text( \"" +text+ "\"));"));
+    }
 
 }

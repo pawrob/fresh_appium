@@ -58,7 +58,6 @@ public class BaseTest {
         options.setSkipUnlock(true);
 
         driver = new AndroidDriver(new URL("http://" + propertiesLoader.getHost() + ":" + propertiesLoader.getPort() + "/"), options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         log.info("Appium server started successfully");
     }
 
