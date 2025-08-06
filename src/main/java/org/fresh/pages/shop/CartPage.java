@@ -17,6 +17,12 @@ public class CartPage extends BasePage {
     @AndroidFindBy(accessibility = "test-CHECKOUT")
     private WebElement checkoutButton;
 
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Price']/android.view.ViewGroup[@content-desc='test-REMOVE']")
+    private WebElement removeFirstProductButton;
+
+    @AndroidFindBy(accessibility = "test-CONTINUE SHOPPING")
+    private WebElement continueShoppingButton;
+
     public CartPage(AppiumDriver driver) {
         super(driver);
     }
@@ -34,6 +40,17 @@ public class CartPage extends BasePage {
 
     public void waitForCartPageToOpen() {
         waitForElementToBeVisible(cartPageHeader);
+    }
+
+    public void removeFirstProductFromCart() {
+        waitForElementAndClick(removeFirstProductButton);
+    }
+
+    public ShopPage clickContinueShoppingButton() {
+        waitForElementAndClick(continueShoppingButton);
+        ShopPage shopPage = new ShopPage(driver);
+        shopPage.waitForShopPageToOpen();
+        return shopPage;
     }
 
 }

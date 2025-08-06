@@ -1,5 +1,6 @@
 package org.fresh;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
@@ -10,10 +11,7 @@ import org.fresh.utilities.PropertiesLoader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -52,13 +50,23 @@ public class BaseTest {
         options.setUiautomator2ServerInstallTimeout(Duration.ofSeconds(ServerTimeout));
         options.setAppWaitActivity(propertiesLoader.getAndroidAppActivity());
         options.setApp(System.getProperty("user.dir") + propertiesLoader.getArtifactPath());
-        options.setFullReset(false);
+        options.setFullReset(true);
         options.setNoReset(false);
         options.setNewCommandTimeout(Duration.ofSeconds(ServerTimeout));
         options.setSkipUnlock(true);
 
         driver = new AndroidDriver(new URL("http://" + propertiesLoader.getHost() + ":" + propertiesLoader.getPort() + "/"), options);
         log.info("Appium server started successfully");
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public void generalBeforeMethod() {
+        driver.executeScript("mobile: startActivity", ImmutableMap.of("intent", propertiesLoader.getAndroidAppPackage() + "/" + propertiesLoader.getAndroidAppActivity()));
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void generalAfterMethod() {
+        driver.executeScript("mobile: clearApp", ImmutableMap.of("appId", propertiesLoader.getAndroidAppPackage()));
     }
 
     @AfterClass
