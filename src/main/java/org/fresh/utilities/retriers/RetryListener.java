@@ -1,4 +1,4 @@
-package org.fresh.utilities;
+package org.fresh.utilities.retriers;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.annotations.ITestAnnotation;
