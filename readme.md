@@ -2,8 +2,8 @@
 
 ## Overview
 
-This project automates mobile application testing for Android platforms using [Appium](https://appium.io/), Java, and Maven. The tests cover login, cart interactions, checkout process, product sorting and validation.
-
+This project automates mobile application testing for Android platforms using [Appium](https://appium.io/), Java, and
+Maven. The tests cover login, cart interactions, checkout process, product sorting and validation.
 
 ## Project Structure
 
@@ -21,53 +21,82 @@ This project automates mobile application testing for Android platforms using [A
 
 ## Requirements
 
-- **Java JDK** (11+)
+- **Java JDK** (17+)
 - **Maven**
 - **Node.js** (18+)
 - **Appium** (installed globally)
 - **Android Studio** (for Android tests)
-- Emulator 
+- Emulator (Tested on android 12 and SKD 31)
 
-## Installation
+## Environment Setup
 
 1. Install Node.js and NPM: [Node.js](https://nodejs.org/)
-2. Install Appium globally:
+2. Install Java  [Java JDK](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+3. Install Maven: [Maven](https://maven.apache.org/install.html)
+4. Check java version and later check java version in maven:
+
+    ```bash
+    java -version
+    mvn -v
+    ```
+5. Install Appium globally:
 
     ```bash
     npm install -g appium # or via homebrew on macOS
     ```
+
+6. (Mac specyfic) Set up Android SDK and emulator and after make sure to have all variables in path and .zshrc (for
+   mac), eg:
+    ```
+    export JAVA_HOME=$(/usr/libexec/java_home)
+    export MAVEN_HOME=/opt/homebrew/Cellar/maven/3.9.11
+    export M2=$MAVEN_HOME/bin
+    export ANDROID_HOME=/users/pawelbucki/Library/Android/sdk 
+    export PATH=$PATH:/usr/local/git/bin/:/usr/local/bin:
+    export PATH=$PATH:$ANDROID_HOME/platform-tools
+    export PATH=$PATH:$ANDROID_HOME/tools
+    export PATH=$PATH:$ANDROID_HOME/tools/bin
+    export PATH=$PATH:$ANDROID_HOME/emulator
+    ```
+
+8. Install Appium Doctor to verify your Appium setup:
+
+    ```bash
+    npm install -g appium-doctor
+    appium-doctor
+    ```
+
+## Project setup
+
+1. clone the repository:
+
+    ```bash
+    git clone https://github.com/pawrob/fresh_appium.git
+   ```
+2. Navigate to the project directory:
+
+    ```bash
+    cd fresh_appium
+    ```
 3. Install Maven dependencies:
 
     ```bash
-    mvn clean install
+    mvn clean compile
     ```
-
-4. Set up Android SDK and emulator:
-6. Setup environment variables for Android SDK:
-    - `ANDROID_HOME` pointing to your Android SDK directory
-    - Add `platform-tools` and `tools` directories to your `PATH`
-7. create `initConfig.android.properties` file in project root directory basing on example
-8. Add the APK file to `src/test/resources/` directory.
-9. Create a `src/test/testData/` directory and add JSON files with test data (`loginData.json`, `blockedUserData.json`).
-    format:
-     ```json
-    [
-        {
-        "username" : "",
-        "password" : ""
-        }
-    ]
-     ```
+4. create `initConfig.android.properties` file in project root directory basing on example and change if necessary
+5. Add the APK file to `src/test/resources/`
+   directory. [apk download](https://github.com/saucelabs/sample-app-mobile/releases/)
+6. Fill password in files in `src/test/testData/` directory (it can be found in app main screen):
+    - `blockedUserData.json`
+    - `loginData.json`
 
 ## Running Tests
-- Appium server starts automatically before tests and stops after all tests are completed. 
+
+- Appium server starts automatically before tests and stops after all tests are completed.
 - Android emulator should be running before executing tests.
+
 ### To run the tests, use the following command:
 
 ```bash
-mvn clean test -Pandroid 
+mvn test -Pandroid 
 ```
-
-
-
-

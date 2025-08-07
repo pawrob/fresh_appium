@@ -39,4 +39,3 @@ build/
 .idea
 /src/test/java/resources
 /initConfig.android.properties
-/src/test/java/testData/*
