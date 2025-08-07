@@ -86,10 +86,18 @@ Maven. The tests cover login, cart interactions, checkout process, product sorti
 4. create `initConfig.android.properties` file in project root directory basing on example and change if necessary
 5. Add the APK file to `src/test/resources/`
    directory. [apk download](https://github.com/saucelabs/sample-app-mobile/releases/)
-6. Fill password in files in `src/test/testData/` directory (it can be found in app main screen):
+6. Create login details files in `src/test/testData/` directory (username and password can be found in app main screen):
     - `blockedUserData.json`
     - `loginData.json`
-
+- Structure of the files:
+    ```json
+    [
+        {
+          "username": "your_username",
+          "password": "your_password"
+        }
+    ]
+    ```
 ## Running Tests
 
 - Appium server starts automatically before tests and stops after all tests are completed.
